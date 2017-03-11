@@ -23,5 +23,18 @@ module Types
     field :human, HumanType, field: Fields::FetchField.build(type: HumanType, model: Human)
     field :droid, DroidType, field: Fields::FetchField.build(type: DroidType, model: Droid)
     field :node, GraphQL::Relay::Node.field
+
+    field :post, PostType do
+      argument :id, types.ID
+      resolve ->(obj, args, ctx) {
+        Post.find(args[:id])
+      }
+    end
+
+    field :posts, types[PostType] do 
+      resolve ->(obj, args, ctx) {
+        Post.all
+      }
+    end
   end
 end
