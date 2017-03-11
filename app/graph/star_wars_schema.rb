@@ -3,7 +3,6 @@ StarWarsSchema = GraphQL::Schema.define do
   mutation Types::MutationType
 
   resolve_type ->(obj, ctx) do
-    puts "resolve_type................"
     case obj
     when Droid
       Types::DroidType
@@ -17,7 +16,6 @@ StarWarsSchema = GraphQL::Schema.define do
   end
 
   object_from_id ->(id, ctx) do
-    puts "object_from_id.............."
     type_name, item_id = GraphQL::Schema::UniqueWithinType.decode(id)
 
     # This `find` gives the user unrestricted access to *all* the records in your app. In
@@ -27,7 +25,6 @@ StarWarsSchema = GraphQL::Schema.define do
   end
 
   id_from_object -> (object, type_definition, ctx) do
-    puts "id_from_object............."
     GraphQL::Schema::UniqueWithinType.encode(type_definition.name, object.id)
   end
 end
